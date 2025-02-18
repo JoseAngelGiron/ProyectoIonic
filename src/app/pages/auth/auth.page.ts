@@ -22,6 +22,7 @@ import { LogoComponent } from 'src/app/shared/components/logo/logo.component';
 import { RouterLink } from '@angular/router';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
+import {LoginComponent} from "../../components/login/login.component";
 
 @Component({
   selector: 'app-auth',
@@ -39,6 +40,7 @@ import { User } from 'src/app/models/user.model';
     IonButton,
     LogoComponent,
     RouterLink,
+    LoginComponent,
   ],
 })
 export class AuthPage implements OnInit {
