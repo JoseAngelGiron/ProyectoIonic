@@ -1,3 +1,32 @@
-<p>
-  login works!
-</p>
+<ion-content>
+  <div class="d-flex-center">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group mb-3">
+        <app-custom-input [control]="loginForm.controls.username" icon="person" type="text"
+                          label="Nombre de usuario"></app-custom-input>
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="text-danger">
+          <small *ngIf="loginForm.get('username')?.hasError('required')">
+            Introduce un nombre de usuario
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <app-custom-input [control]="loginForm.controls.password" icon="lock-closed" type="password"
+                          label="Contraseña"></app-custom-input>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          <small *ngIf="loginForm.get('password')?.hasError('required')">El asunto es obligatorio.</small>
+        </div>
+      </div>
+
+      <div class="form-group text-center">
+        <ion-button mode="ios"
+                    expand="block"
+                    class="btn btn-primary w-100 submit"
+                    type="submit"
+                    [disabled]="loginForm.invalid">Iniciar Sesión
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

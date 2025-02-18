@@ -5,6 +5,7 @@ import {
   IonContent
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import {LoginComponent} from "../../components/login/login.component";
 
 @Component({
   selector: 'app-auth',
@@ -16,6 +17,7 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
     IonContent,
     CommonModule,
     FormsModule,
+    LoginComponent,
   ],
 })
 export class AuthPage implements OnInit {
