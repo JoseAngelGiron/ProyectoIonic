@@ -18,8 +18,8 @@ import {IonButton, IonContent} from "@ionic/angular/standalone";
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
   });
 
   constructor() {
@@ -28,6 +28,4 @@ export class LoginComponent {
   onSubmit() {
 
   }
-
-  protected readonly FormControl = FormControl;
 }
