@@ -1,8 +1,8 @@
 <ion-content>
   <div class="d-flex-center">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" class="login-form">
       <div class="form-group mb-3">
-        <app-custom-input [control]="loginForm.controls.email" icon="person" type="text"
+        <app-custom-input [control]="loginForm.controls.email" icon="mail-outline" type="text"
                           label="Correo"></app-custom-input>
         <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
           <small *ngIf="loginForm.get('email')?.hasError('required')">El correo es obligatorio.</small>
@@ -21,6 +21,12 @@
       <div class="form-group text-center">
         <ion-button mode="ios" expand="block" class="btn btn-primary w-100 submit" type="submit"
                     [disabled]="loginForm.invalid">Iniciar Sesión
+          <ion-icon slot="end" name="log-in-outline"></ion-icon>
+        </ion-button>
+        <ion-button routerLink="/sign-up" mode="ios" expand="block" class="btn btn-primary ion-margin-top"
+                    fill="outline">
+          Crear usuario
+          <ion-icon slot="end" name="person-add-outline"></ion-icon>
         </ion-button>
       </div>
     </form>

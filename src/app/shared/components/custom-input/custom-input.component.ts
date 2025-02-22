@@ -2,8 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {IonButton, IonIcon, IonInput, IonItem} from "@ionic/angular/standalone";
 import {NgIf} from "@angular/common";
-import {eyeOffOutline, eyeOutline} from "ionicons/icons";
-import {addIcons} from "ionicons";
 
 @Component({
   selector: 'app-custom-input',
@@ -22,7 +20,6 @@ export class CustomInputComponent implements OnInit {
   hide: boolean = true;
 
   constructor() {
-    addIcons({eyeOutline, eyeOffOutline});
   }
 
   ngOnInit() {
