@@ -48,6 +48,7 @@ export class LoginComponent {
   async submit() {
     const loading = await this.utilsService.loading();
     await loading.present();
+
     this.firebaseService.signIn(this.loginForm.value as User).then(user => {
       console.log(user);
     }).catch(error => {

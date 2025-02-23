@@ -48,7 +48,7 @@ export class SignUpComponent {
     const loading = await this.utilsService.loading();
     await loading.present();
     this.firebaseService.signUp(this.signUpForm.value as User).then(async (res) => {
-        this.firebaseService.updateUser(this.signUpForm.value.name!)
+      this.firebaseService.updateUser(this.signUpForm.value.name!)
         console.log(res)
       }).catch(error => {
         this.utilsService.presentToast({
