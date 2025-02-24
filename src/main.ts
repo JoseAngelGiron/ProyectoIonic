@@ -17,7 +17,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import {enableProdMode} from "@angular/core";
+import {enableProdMode, isDevMode} from "@angular/core";
+import { provideServiceWorker } from '@angular/service-worker';
 // Call the element loader before the bootstrapModule/bootstrapApplication call
 defineCustomElements(window);
 if (environment.production) {
@@ -33,6 +34,9 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    provideStorage(() => getStorage()),
+    provideStorage(() => getStorage()), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 });

@@ -28,7 +28,6 @@ import { LogoComponent } from 'src/app/shared/components/logo/logo.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
-import {SignUpComponent} from "../../../components/sign-up/sign-up.component";
 
 @Component({
   selector: 'app-sign-up',
@@ -36,12 +35,15 @@ import {SignUpComponent} from "../../../components/sign-up/sign-up.component";
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
   imports: [
+    IonIcon,
     HeaderComponent,
     IonContent,
     CommonModule,
     FormsModule,
+    CustomInputComponent,
     ReactiveFormsModule,
-    SignUpComponent,
+    IonButton,
+    LogoComponent,
   ],
 })
 export class SignUpPage implements OnInit {
@@ -66,7 +68,7 @@ export class SignUpPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Hola")
+    console.log("Sign up page")
   }
 
   async submit() {
@@ -76,7 +78,6 @@ export class SignUpPage implements OnInit {
       this.firebaseService
         .signUp(this.form.value as User)
         .then(async (res) => {
-          console.log("Entra");
           this.firebaseService.updateUser(this.form.value.name!)
           let uid = res.user!.uid;
           this.form.controls.uid.setValue(uid);
@@ -110,7 +111,7 @@ export class SignUpPage implements OnInit {
         .then((res) => {
           this.utilsService.saveInLocalStorage('user', this.form.value);
           this.form.reset();
-          this.utilsService.routerLink('/home');
+          this.utilsService.routerLink('/main/home');
         })
         .catch((error) => {
           this.utilsService.presentToast({

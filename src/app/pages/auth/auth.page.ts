@@ -25,7 +25,6 @@ import { RouterLink } from '@angular/router';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
-import {LoginComponent} from "../../components/login/login.component";
 
 @Component({
   selector: 'app-auth',
@@ -33,13 +32,16 @@ import {LoginComponent} from "../../components/login/login.component";
   styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [
+    IonIcon,
     HeaderComponent,
     IonContent,
     CommonModule,
     FormsModule,
+    CustomInputComponent,
     ReactiveFormsModule,
-    LoginComponent,
-
+    IonButton,
+    LogoComponent,
+    RouterLink,
   ],
 })
 export class AuthPage implements OnInit {
@@ -62,9 +64,7 @@ export class AuthPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log("Probando")
-  }
+  ngOnInit() {}
 
   async submit() {
     const loading = await this.utilsService.loading();
@@ -73,7 +73,6 @@ export class AuthPage implements OnInit {
       .signIn(this.form.value as User)
       .then((res) => {
         this.getUserInfo(res.user.uid);
-
       })
       .catch((error) => {
         this.utilsService.presentToast({
@@ -108,7 +107,7 @@ export class AuthPage implements OnInit {
           icon: 'person-circle-outline',
         });
         this.form.reset();
-        this.utilsService.routerLink('/home');
+        this.utilsService.routerLink('/main/home');
       })
       .catch((error) => {
         this.utilsService.presentToast({
