@@ -1,30 +1,27 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
 
-import { addIcons } from 'ionicons';
+import {addIcons} from 'ionicons';
 import {
+  alertCircleOutline,
+  checkmarkOutline,
+  imageOutline,
   lockClosedOutline,
   mailOutline,
   personAddOutline,
   personOutline,
-  alertCircleOutline, imageOutline,
+  bodyOutline
 } from 'ionicons/icons';
 
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { User } from 'src/app/models/user.model';
-import { UtilsService } from 'src/app/services/utils.service';
+import {FirebaseService} from 'src/app/services/firebase.service';
+import {User} from 'src/app/models/user.model';
+import {UtilsService} from 'src/app/services/utils.service';
 import {CustomInputComponent} from "../custom-input/custom-input.component";
 import {HeaderComponent} from "../header/header.component";
 import {IonAvatar, IonButton, IonContent, IonIcon} from "@ionic/angular/standalone";
 import {SupabaseService} from "../../../services/supabase.service";
-import firebase from "firebase/compat";
+import {Card} from "../../../models/card.model";
 
 @Component({
   selector: 'app-add-update-card',
@@ -44,6 +41,7 @@ import firebase from "firebase/compat";
 })
 
 export class AddUpdateCardComponent implements OnInit {
+  @Input() card: Card | null = null;
   firebaseService = inject(FirebaseService);
   utilsService = inject(UtilsService);
   supabaseService = inject(SupabaseService);
@@ -51,11 +49,12 @@ export class AddUpdateCardComponent implements OnInit {
   user = {} as User;
 
   form = new FormGroup({
-    id: new FormControl(''),
-    image: new FormControl('', [Validators.required]),
+    photo: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    units: new FormControl('', [Validators.required, Validators.min(1)]),
-    strength: new FormControl('', [Validators.required, Validators.min(0)]),
+    skill: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    attack: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    type: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    weakness: new FormControl('', [Validators.required, Validators.minLength(4)]),
     uid: new FormControl(''),
   });
 
@@ -66,53 +65,16 @@ export class AddUpdateCardComponent implements OnInit {
       personAddOutline,
       personOutline,
       alertCircleOutline,
-      imageOutline
+      imageOutline,
+      checkmarkOutline,
+      bodyOutline
     });
   }
+
   ngOnInit() {
-    console.log("add-update-card")
-  }
-
-
-  async submit() {
-    if (this.form.valid) {
-      const loading = await this.utilsService.loading();
-      await loading.present();
-
-      const path: string = `users/${this.user.uid}/miniatures`;
-      const imageDataUrl = this.form.value.image;
-      const imagePath = `${this.user.uid}/${Date.now()}`;
-      const imageUrl = await this.supabaseService.uploadImage(
-        imagePath,
-        imageDataUrl!
-      );
-      this.form.controls.image.setValue(imageUrl);
-      delete this.form.value.id;
-
-      this.supabaseService
-        this.firebaseService.addDocument(path, this.form.value)
-        .then(async (res) => {
-          this.utilsService.dismissModal({ success: true });
-          this.utilsService.presentToast({
-            message: 'Mininatura añadida exitosamente',
-            duration: 1500,
-            color: 'success',
-            position: 'middle',
-            icon: 'checkmark-circle-outline',
-          });
-        })
-        .catch((error) => {
-          this.utilsService.presentToast({
-            message: error.message,
-            duration: 2500,
-            color: 'danger',
-            position: 'middle',
-            icon: 'alert-circle-outline',
-          });
-        })
-        .finally(() => {
-          loading.dismiss();
-        });
+    this.user = this.utilsService.getFromLocalStorage('user');
+    if (this.card) {
+      this.form.setValue(this.card)
     }
   }
 
@@ -121,7 +83,100 @@ export class AddUpdateCardComponent implements OnInit {
       await this.utilsService.takePicture('Imagen de la miniatura')
     ).dataUrl;
     if (dataUrl) {
-      this.form.controls.image.setValue(dataUrl);
+      this.form.controls.photo.setValue(dataUrl);
     }
   }
+
+  async submit() {
+    if (this.form.valid) {
+      if (this.card) {
+        this.updateCard();
+      } else {
+        this.createCard();
+      }
+    }
+  }
+
+  async createCard() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    const path: string = `users/${this.user.uid}/cards`;
+    const imageDataUrl = this.form.value.photo;
+    const imagePath = `${this.user.uid}/${Date.now()}`;
+    const imageUrl = await this.supabaseService.uploadImage(
+      imagePath,
+      imageDataUrl!
+    );
+    this.form.controls.photo.setValue(imageUrl);
+    delete this.form.value.uid;
+
+    this.firebaseService
+      .addDocument(path, this.form.value)
+      .then(async (res) => {
+        this.utilsService.dismissModal({success: true});
+        this.utilsService.presentToast({
+          message: 'Carta añadida exitosamente',
+          duration: 1500,
+          color: 'success',
+          position: 'middle',
+          icon: 'checkmark-outline',
+        });
+      })
+      .catch((error) => {
+        this.utilsService.presentToast({
+          message: error.message,
+          duration: 2500,
+          color: 'danger',
+          position: 'middle',
+          icon: 'alert-circle-outline',
+        });
+      })
+      .finally(() => {
+        loading.dismiss();
+      });
+  }
+
+  async updateCard() {
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    const path: string = `users/${this.user.uid}/miniatures/${this.card!.uid}`;
+    if (this.form.value.photo != this.card!.photo) {
+      const imageDataUrl = this.form.value.photo;
+      const imagePath = this.supabaseService.getFilePath(this.card!.photo)
+      const imageUrl = await this.supabaseService.uploadImage(
+        imagePath!,
+        imageDataUrl!
+      );
+      this.form.controls.photo.setValue(imageUrl);
+    }
+    delete this.form.value.uid;
+
+    this.firebaseService
+      .updateDocument(path, this.form.value)
+      .then(async (res) => {
+        this.utilsService.dismissModal({success: true});
+        this.utilsService.presentToast({
+          message: 'Carta editada exitosamente',
+          duration: 1500,
+          color: 'success',
+          position: 'middle',
+          icon: 'checkmark-outline',
+        });
+      })
+      .catch((error) => {
+        this.utilsService.presentToast({
+          message: error.message,
+          duration: 2500,
+          color: 'danger',
+          position: 'middle',
+          icon: 'alert-circle-outline',
+        });
+      })
+      .finally(() => {
+        loading.dismiss();
+      });
+  }
 }
+

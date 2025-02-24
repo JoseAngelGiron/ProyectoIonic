@@ -52,7 +52,6 @@ export class SupabaseService {
     try {
       const url = new URL(publicUrl);
 
-      // Buscar el segmento `/storage/v1/object/public/`
       const publicPrefix = '/storage/v1/object/public/' + environment.supabaseConfig.bucket+'/';
       const startIndex = url.pathname.indexOf(publicPrefix);
 
@@ -62,7 +61,6 @@ export class SupabaseService {
         );
       }
 
-      // Obtener el resto de la ruta después del prefijo
       const filePath = url.pathname.substring(startIndex + publicPrefix.length);
 
       return filePath;
