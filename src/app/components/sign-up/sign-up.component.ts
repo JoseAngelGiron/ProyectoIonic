@@ -35,6 +35,7 @@ export class SignUpComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
     name: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    uid: new FormControl('')
   });
 
   firebaseService = inject(FirebaseService);
@@ -45,23 +46,61 @@ export class SignUpComponent {
   }
 
   async submit() {
-    const loading = await this.utilsService.loading();
-    await loading.present();
-    this.firebaseService.signUp(this.signUpForm.value as User).then(async (res) => {
-        this.firebaseService.updateUser(this.signUpForm.value.name!)
-        console.log(res)
-      }).catch(error => {
-        this.utilsService.presentToast({
-          message: error.message,
-          duration: 2500,
-          color: 'danger',
-          position: 'middle',
-          icon: 'alert-outline',
+    if (this.signUpForm.valid) {
+      const loading = await this.utilsService.loading();
+      await loading.present();
+      this.firebaseService
+        .signUp(this.signUpForm.value as User)
+        .then(async (res) => {
+          console.log("Entra");
+          this.firebaseService.updateUser(this.signUpForm.value.name!)
+          let uid = res.user!.uid;
+          this.signUpForm.controls.uid.setValue(uid);
+          this.setUserInfo(uid);
+        })
+        .catch((error) => {
+          this.utilsService.presentToast({
+            message: error.message,
+            duration: 2500,
+            color: 'danger',
+            position: 'middle',
+            icon: 'alert-circle-outline',
+          });
+        })
+        .finally(() => {
+          loading.dismiss();
         });
-      })
-      .finally(() => {
-        loading.dismiss();
-      })
+    }
+  }
+
+  async setUserInfo(uid: string) {
+    if (this.signUpForm.valid) {
+      const loading = await this.utilsService.loading();
+      await loading.present();
+
+      let path = `users/${uid}`;
+      delete this.signUpForm.value.password;
+
+      this.firebaseService
+        .setDocument(path, this.signUpForm.value)
+        .then((res) => {
+          this.utilsService.saveInLocalStorage('user', this.signUpForm.value);
+          this.signUpForm.reset();
+          this.utilsService.routerLink('/home');
+        })
+        .catch((error) => {
+          this.utilsService.presentToast({
+            message: error.message,
+            duration: 2500,
+            color: 'danger',
+            position: 'middle',
+            icon: 'alert-circle-outline',
+          });
+        })
+        .finally(() => {
+          loading.dismiss();
+        });
+    }
   }
 
 }
