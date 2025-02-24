@@ -1,33 +1,17 @@
-<app-header title="Agregar nueva carta" [isModal]="true"></app-header>
+<app-header [title]="card ? 'Actualizar carta' : 'Añadir carta'" [isModal]="true"></app-header>
 <ion-content>
-  <form
-    [formGroup]="form"
-    class="ion-padding ion-text-center"
-    (ngSubmit)="submit()"
-  >
-    <ion-avatar *ngIf="form.value.image">
-      <img [src]="form.value.image" />
+  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
+    <ion-avatar *ngIf="form.value.photo">
+      <img [src]="form.value.photo"/>
     </ion-avatar>
-    <ion-icon
-      class="image-icon"
-      name="image-outline"
-      *ngIf="!form.value.image"
-    ></ion-icon>
-    <br />
+    <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.photo"></ion-icon>
+    <br/>
     <ion-button (click)="takeImage()" size="small" shape="round" mode="ios">
       Tomar / Seleccionar
     </ion-button>
-    <app-custom-input
-      autocomplete="name"
-      [control]="form.controls.name"
-      type="text"
-      label="Nombre"
-    ></app-custom-input>
 
-    <div
-      class="validators"
-      *ngIf="form.get('name')?.errors && form.get('name')?.touched"
-    >
+    <app-custom-input autocomplete="name" [control]="form.controls.name" type="text" label="Nombre"></app-custom-input>
+    <div class="validators" *ngIf="form.get('name')?.errors && form.get('name')?.touched">
       <div *ngIf="form.get('name')?.errors?.['required']">
         Debe especificar un nombre
       </div>
@@ -36,53 +20,49 @@
       </div>
     </div>
 
-
-    <app-custom-input
-      [control]="form.controls.units"
-      type="number"
-      label="Unidades"
-    ></app-custom-input>
-
-    <div
-      class="validators"
-      *ngIf="form.get('units')?.errors && form.get('units')?.touched"
-    >
-      <div *ngIf="form.get('units')?.errors?.['required']">
-        Debe especificar un número de unidades
+    <app-custom-input [control]="form.controls.skill" type="text" label="Habilidad"></app-custom-input>
+    <div class="validators" *ngIf="form.get('skill')?.errors && form.get('skill')?.touched">
+      <div *ngIf="form.get('skill')?.errors?.['required']">
+        Debe especificar una habilidad
       </div>
-      <div *ngIf="form.get('units')?.errors?.['min']">
-        Debe añadir al menos una unidad
+      <div *ngIf="form.get('skill')?.errors?.['minlength']">
+        La habilidad debe tener al menos 4 caracteres
       </div>
     </div>
 
-
-    <app-custom-input
-      [control]="form.controls.strength"
-      type="number"
-      label="Fuerza"
-    ></app-custom-input>
-
-    <div
-      class="validators"
-      *ngIf="form.get('strength')?.errors && form.get('strength')?.touched"
-    >
-      <div *ngIf="form.get('strength')?.errors?.['required']">
-        Debe especificar un número de unidades
+    <app-custom-input [control]="form.controls.attack" type="text" label="Ataque"></app-custom-input>
+    <div class="validators" *ngIf="form.get('attack')?.errors && form.get('attack')?.touched">
+      <div *ngIf="form.get('attack')?.errors?.['required']">
+        Debe especificar un ataque
       </div>
-      <div *ngIf="form.get('strength')?.errors?.['min']">
-        La fuerza mínima es 0.
+      <div *ngIf="form.get('attack')?.errors?.['minlength']">
+        El ataque debe tener al menos 4 caracteres
       </div>
     </div>
 
+    <app-custom-input [control]="form.controls.type" type="text" label="Tipo"></app-custom-input>
+    <div class="validators" *ngIf="form.get('type')?.errors && form.get('type')?.touched">
+      <div *ngIf="form.get('type')?.errors?.['required']">
+        Debe especificar un tipo de pokemon
+      </div>
+      <div *ngIf="form.get('type')?.errors?.['minlength']">
+        El tipo debe tener al menos 4 caracteres
+      </div>
+    </div>
 
-    <ion-button
-      mode="ios"
-      class="ion-margin"
-      type="submit"
-      [disabled]="form.invalid"
-    >
-      Agregar miniatura
-      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+    <app-custom-input [control]="form.controls.weakness" type="text" label="Debilidad"></app-custom-input>
+    <div class="validators" *ngIf="form.get('weakness')?.errors && form.get('weakness')?.touched">
+      <div *ngIf="form.get('weakness')?.errors?.['required']">
+        Debe especificar una debilidad
+      </div>
+      <div *ngIf="form.get('weakness')?.errors?.['minlength']">
+        La debilidad debe tener al menos 4 caracteres
+      </div>
+    </div>
+
+    <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+      {{card ? 'Actualizar' : 'Añadir'}}
+      <ion-icon slot="end" name="body-outline"></ion-icon>
     </ion-button>
   </form>
 </ion-content>

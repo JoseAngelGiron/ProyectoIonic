@@ -1,26 +1,25 @@
-import { Injectable, inject } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateProfile,
   UserCredential,
-  sendPasswordResetEmail,
 } from '@angular/fire/auth';
+import {Storage,} from '@angular/fire/storage';
+import {User} from '../models/user.model';
 import {
-  Storage,
-  uploadString,
-  ref,
-  getDownloadURL,
-} from '@angular/fire/storage';
-import { User } from '../models/user.model';
-import {
-  Firestore,
-  setDoc,
-  doc,
-  getDoc,
   addDoc,
   collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  Firestore,
+  getDoc,
+  query,
+  setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -42,8 +41,7 @@ export class FirebaseService {
   async updateUser(displayName: string) {
     const user = await this.auth.currentUser;
     if (user) {
-      // Actualiza el perfil del usuario
-      await updateProfile(user, { displayName: displayName });
+      await updateProfile(user, {displayName: displayName});
     }
   }
 
@@ -79,15 +77,37 @@ export class FirebaseService {
   setDocument(path: string, data: any) {
     return setDoc(doc(this.firestore, path), data);
   }
+
+  updateDocument(path: string, data: any) {
+    return updateDoc(doc(this.firestore, path), data);
+  }
+
   addDocument(path: string, data: any) {
     return addDoc(collection(this.firestore, path), data);
   }
 
-  async uploadImage(path: string, imageUrl: string) {
-    return uploadString(ref(this.storage, path), imageUrl, 'data_url').then(
-      () => {
-        return getDownloadURL(ref(this.storage, path));
-      }
-    );
+  deleteDocument(path: string) {
+    return deleteDoc(doc(this.firestore, path));
   }
+
+  getCollectionData(path: string, collectionQuery?: any) {
+    const ref = collection(this.firestore, path);
+    return collectionData(query(ref, collectionQuery));
+  }
+
+  // async uploadImage(path: string, imageUrl: string) {
+  //   return uploadString(ref(this.storage, path), imageUrl, 'data_url').then(
+  //     () => {
+  //       return getDownloadURL(ref(this.storage, path));
+  //     }
+  //   );
+  // }
+
+  // async getFilePath(url: string) {
+  //   return ref(this.storage, url).fullPath
+  // }
+
+  // async deleteFile(path: string) {
+  //   return deleteObject(ref(this.storage, path));
+  // }
 }
