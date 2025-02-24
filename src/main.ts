@@ -16,6 +16,14 @@ import { environment } from './environments/environment';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import {enableProdMode} from "@angular/core";
+// Call the element loader before the bootstrapModule/bootstrapApplication call
+defineCustomElements(window);
+if (environment.production) {
+  enableProdMode();
+}
+
 
 bootstrapApplication(AppComponent, {
   providers: [
