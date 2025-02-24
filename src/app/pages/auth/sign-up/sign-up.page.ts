@@ -28,6 +28,7 @@ import { LogoComponent } from 'src/app/shared/components/logo/logo.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
+import {SignUpComponent} from "../../../components/sign-up/sign-up.component";
 
 @Component({
   selector: 'app-sign-up',
@@ -44,6 +45,7 @@ import { UtilsService } from 'src/app/services/utils.service';
     ReactiveFormsModule,
     IonButton,
     LogoComponent,
+    SignUpComponent,
   ],
 })
 export class SignUpPage implements OnInit {
