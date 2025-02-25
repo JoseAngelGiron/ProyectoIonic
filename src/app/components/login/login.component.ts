@@ -89,7 +89,7 @@ export class LoginComponent {
           icon: 'person-circle-outline',
         });
         this.loginForm.reset();
-        this.utilsService.routerLink('/home');
+        this.utilsService.routerLink('/main/home');
       })
       .catch((error) => {
         this.utilsService.presentToast({
