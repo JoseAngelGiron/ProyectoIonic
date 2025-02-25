@@ -1,9 +1,6 @@
 <app-header [showMenuButton]="true" title="Inicio"></app-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <ion-list *ngIf="!loading">
     <ion-item-sliding *ngFor="let card of cards" class="miniature-item">
       <ion-item>
