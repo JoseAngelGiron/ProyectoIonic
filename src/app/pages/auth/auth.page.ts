@@ -39,7 +39,6 @@ import {LoginComponent} from "../../components/login/login.component";
     FormsModule,
     ReactiveFormsModule,
     LoginComponent,
-
   ],
 })
 export class AuthPage implements OnInit {
@@ -62,9 +61,7 @@ export class AuthPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log("Probando")
-  }
+  ngOnInit() {}
 
   async submit() {
     const loading = await this.utilsService.loading();
@@ -73,7 +70,6 @@ export class AuthPage implements OnInit {
       .signIn(this.form.value as User)
       .then((res) => {
         this.getUserInfo(res.user.uid);
-
       })
       .catch((error) => {
         this.utilsService.presentToast({
@@ -108,7 +104,7 @@ export class AuthPage implements OnInit {
           icon: 'person-circle-outline',
         });
         this.form.reset();
-        this.utilsService.routerLink('/home');
+        this.utilsService.routerLink('/main/home');
       })
       .catch((error) => {
         this.utilsService.presentToast({

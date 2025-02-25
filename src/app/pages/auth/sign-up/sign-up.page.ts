@@ -10,8 +10,6 @@ import {
 import {
   IonContent,
   IonIcon,
-  IonHeader,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { CustomInputComponent } from 'src/app/shared/components/custom-input/custom-input.component';
@@ -66,7 +64,7 @@ export class SignUpPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Hola")
+    console.log("Sign up page")
   }
 
   async submit() {
@@ -76,7 +74,6 @@ export class SignUpPage implements OnInit {
       this.firebaseService
         .signUp(this.form.value as User)
         .then(async (res) => {
-          console.log("Entra");
           this.firebaseService.updateUser(this.form.value.name!)
           let uid = res.user!.uid;
           this.form.controls.uid.setValue(uid);
@@ -110,7 +107,7 @@ export class SignUpPage implements OnInit {
         .then((res) => {
           this.utilsService.saveInLocalStorage('user', this.form.value);
           this.form.reset();
-          this.utilsService.routerLink('/home');
+          this.utilsService.routerLink('/main/home');
         })
         .catch((error) => {
           this.utilsService.presentToast({

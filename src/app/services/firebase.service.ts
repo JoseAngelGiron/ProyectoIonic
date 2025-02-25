@@ -52,7 +52,7 @@ export class FirebaseService {
   async signOut() {
     await this.auth.signOut();
     localStorage.removeItem('user');
-    window.location.reload();
+    //window.location.reload();
   }
 
   async isAuthenticated() {
