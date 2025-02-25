@@ -33,16 +33,11 @@ import {LoginComponent} from "../../components/login/login.component";
   styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [
-    IonIcon,
     HeaderComponent,
     IonContent,
     CommonModule,
     FormsModule,
-    CustomInputComponent,
     ReactiveFormsModule,
-    IonButton,
-    LogoComponent,
-    RouterLink,
     LoginComponent,
   ],
 })

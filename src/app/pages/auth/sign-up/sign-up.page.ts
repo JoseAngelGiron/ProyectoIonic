@@ -10,8 +10,6 @@ import {
 import {
   IonContent,
   IonIcon,
-  IonHeader,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { CustomInputComponent } from 'src/app/shared/components/custom-input/custom-input.component';
@@ -36,15 +34,11 @@ import {SignUpComponent} from "../../../components/sign-up/sign-up.component";
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
   imports: [
-    IonIcon,
     HeaderComponent,
     IonContent,
     CommonModule,
     FormsModule,
-    CustomInputComponent,
     ReactiveFormsModule,
-    IonButton,
-    LogoComponent,
     SignUpComponent,
   ],
 })
