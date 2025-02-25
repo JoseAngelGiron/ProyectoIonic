@@ -1,5 +1,5 @@
 export interface Card {
-  uid: string,
+  id: string,
   name:string,
   photo: string,
   skill:string,
