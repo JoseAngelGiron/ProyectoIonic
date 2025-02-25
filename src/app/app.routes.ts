@@ -1,6 +1,6 @@
-import { Routes } from '@angular/router';
-import { noAuthGuard } from './guards/no-auth.guard';
-import { authGuard } from './guards/auth.guard';
+import {Routes} from '@angular/router';
+import {noAuthGuard} from './guards/no-auth.guard';
+import {authGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -54,5 +54,11 @@ export const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/not-found/not-found.page').then(
+        (m) => m.NotFoundPage)
   },
 ];

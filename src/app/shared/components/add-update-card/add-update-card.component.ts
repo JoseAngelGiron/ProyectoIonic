@@ -143,7 +143,7 @@ export class AddUpdateCardComponent implements OnInit {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    const path: string = `users/${this.user.uid}/miniatures/${this.card!.id}`;
+    const path: string = `users/${this.user.uid}/cards/${this.card!.id}`;
     if (this.form.value.photo != this.card!.photo) {
       const imageDataUrl = this.form.value.photo;
       const imagePath = this.supabaseService.getFilePath(this.card!.photo)
