@@ -55,7 +55,7 @@ export class AddUpdateCardComponent implements OnInit {
     attack: new FormControl('', [Validators.required, Validators.minLength(4)]),
     type: new FormControl('', [Validators.required, Validators.minLength(4)]),
     weakness: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    uid: new FormControl(''),
+    id: new FormControl(''),
   });
 
   constructor() {
@@ -74,7 +74,9 @@ export class AddUpdateCardComponent implements OnInit {
   ngOnInit() {
     this.user = this.utilsService.getFromLocalStorage('user');
     if (this.card) {
+      console.log(this.card)
       this.form.setValue(this.card)
+      console.log(this.form.value)
     }
   }
 
@@ -109,7 +111,7 @@ export class AddUpdateCardComponent implements OnInit {
       imageDataUrl!
     );
     this.form.controls.photo.setValue(imageUrl);
-    delete this.form.value.uid;
+    delete this.form.value.id;
 
     this.firebaseService
       .addDocument(path, this.form.value)
@@ -141,7 +143,7 @@ export class AddUpdateCardComponent implements OnInit {
     const loading = await this.utilsService.loading();
     await loading.present();
 
-    const path: string = `users/${this.user.uid}/miniatures/${this.card!.uid}`;
+    const path: string = `users/${this.user.uid}/miniatures/${this.card!.id}`;
     if (this.form.value.photo != this.card!.photo) {
       const imageDataUrl = this.form.value.photo;
       const imagePath = this.supabaseService.getFilePath(this.card!.photo)
@@ -151,7 +153,7 @@ export class AddUpdateCardComponent implements OnInit {
       );
       this.form.controls.photo.setValue(imageUrl);
     }
-    delete this.form.value.uid;
+    delete this.form.value.id;
 
     this.firebaseService
       .updateDocument(path, this.form.value)

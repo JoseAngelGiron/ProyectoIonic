@@ -17,7 +17,7 @@ import {
   IonSkeletonText
 } from '@ionic/angular/standalone';
 import {addIcons} from 'ionicons';
-import {add, bodyOutline} from 'ionicons/icons';
+import {add, bodyOutline, createOutline,trashOutline} from 'ionicons/icons';
 import {FirebaseService} from 'src/app/services/firebase.service';
 import {UtilsService} from 'src/app/services/utils.service';
 import {AddUpdateCardComponent} from 'src/app/shared/components/add-update-card/add-update-card.component';
@@ -42,7 +42,7 @@ export class HomePage implements OnInit {
   loading: boolean = false;
 
   constructor() {
-    addIcons({add, bodyOutline});
+    addIcons({add, bodyOutline,createOutline,trashOutline});
   }
 
   ngOnInit() {
@@ -110,14 +110,14 @@ export class HomePage implements OnInit {
     const loading = await this.utilsService.loading();
     await loading.present();
     const user: User = this.utilsService.getLocalStoredUser()!;
-    const path: string = `users/${user.uid}/cards/${card!.uid}`;
+    const path: string = `users/${user.uid}/cards/${card!.id}`;
 
     const imagePath = this.supabaseService.getFilePath(card!.photo)
     await this.supabaseService.deleteFile(imagePath!);
     this.firebaseService
       .deleteDocument(path)
       .then(async (res) => {
-        this.cards = this.cards.filter(listedCard => listedCard.uid !== card.uid)
+        this.cards = this.cards.filter(listedCard => listedCard.id !== card.id)
         this.utilsService.presentToast({
           message: 'Carta borrada exitosamente',
           duration: 1500,

@@ -92,7 +92,7 @@ export class FirebaseService {
 
   getCollectionData(path: string, collectionQuery?: any) {
     const ref = collection(this.firestore, path);
-    return collectionData(query(ref, collectionQuery));
+    return collectionData(query(ref, collectionQuery), {idField: 'id'});
   }
 
   // async uploadImage(path: string, imageUrl: string) {
