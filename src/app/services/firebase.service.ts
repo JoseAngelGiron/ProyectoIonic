@@ -21,6 +21,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -90,24 +91,8 @@ export class FirebaseService {
     return deleteDoc(doc(this.firestore, path));
   }
 
-  getCollectionData(path: string, collectionQuery?: any) {
+  getCollectionData(path: string, collectionQuery?: any): Observable<any[]> {
     const ref = collection(this.firestore, path);
-    return collectionData(query(ref, collectionQuery), {idField: 'id'});
+    return collectionQuery ? collectionData(query(ref, collectionQuery), {idField: 'id'}) : collectionData(ref, {idField: 'id'});
   }
-
-  // async uploadImage(path: string, imageUrl: string) {
-  //   return uploadString(ref(this.storage, path), imageUrl, 'data_url').then(
-  //     () => {
-  //       return getDownloadURL(ref(this.storage, path));
-  //     }
-  //   );
-  // }
-
-  // async getFilePath(url: string) {
-  //   return ref(this.storage, url).fullPath
-  // }
-
-  // async deleteFile(path: string) {
-  //   return deleteObject(ref(this.storage, path));
-  // }
 }

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, OnDestroy} from '@angular/core';
 import {
   IonAvatar,
   IonChip,
@@ -12,12 +12,10 @@ import {
   IonItemSliding,
   IonLabel,
   IonList,
-  IonRefresher,
-  IonRefresherContent,
   IonSkeletonText
 } from '@ionic/angular/standalone';
 import {addIcons} from 'ionicons';
-import {add, bodyOutline, createOutline,trashOutline} from 'ionicons/icons';
+import {add, bodyOutline, createOutline, trashOutline} from 'ionicons/icons';
 import {FirebaseService} from 'src/app/services/firebase.service';
 import {UtilsService} from 'src/app/services/utils.service';
 import {AddUpdateCardComponent} from 'src/app/shared/components/add-update-card/add-update-card.component';
@@ -26,23 +24,25 @@ import {User} from "../../../models/user.model";
 import {Card} from "../../../models/card.model";
 import {NgForOf, NgIf} from "@angular/common";
 import {SupabaseService} from "../../../services/supabase.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText, IonRefresher, IonRefresherContent],
+  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   firebaseService = inject(FirebaseService);
   supabaseService = inject(SupabaseService);
   utilsService = inject(UtilsService);
   cards: Card[] = [];
   loading: boolean = false;
+  cardsSubscription?: Subscription;
 
   constructor() {
-    addIcons({add, bodyOutline,createOutline,trashOutline});
+    addIcons({add, bodyOutline, createOutline, trashOutline});
   }
 
   ngOnInit() {
@@ -54,32 +54,17 @@ export class HomePage implements OnInit {
     const user: User = this.utilsService.getLocalStoredUser()!;
     const path: string = `users/${user.uid}/cards`;
 
-    let timer: any;
-    const resetTimer = () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        console.log(
-          'No hay más novedades en 5 segundos. Cancelando suscripción.'
-        );
-        sub.unsubscribe();
-        this.loading = false;
-      }, 5000);
-    };
-
-    let sub = this.firebaseService.getCollectionData(path).subscribe({
-      next: (res: any) => {
-        sub.unsubscribe();
-
+    if (this.cardsSubscription) {
+      this.cardsSubscription.unsubscribe();
+    }
+    this.cardsSubscription = this.firebaseService.getCollectionData(path).subscribe({
+      next: (res: Card[]) => {
         this.cards = res;
         this.loading = false;
-
-        resetTimer();
       },
       error: (err) => {
         console.error('Error al obtener los datos: ', err);
         this.loading = false;
-
-        if (timer) clearTimeout(timer);
       }
     });
   }
@@ -95,15 +80,14 @@ export class HomePage implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
-    this.getCards();
+  ngOnDestroy() {
+    if (this.cardsSubscription) {
+      this.cardsSubscription.unsubscribe();
+    }
   }
 
-  doRefresh(event: any) {
-    setTimeout(() => {
-      this.getCards();
-      event.target.complete();
-    }, 2000);
+  ionViewWillEnter() {
+    this.getCards();
   }
 
   async deleteCard(card: Card) {
