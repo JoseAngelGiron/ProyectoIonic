@@ -82,7 +82,7 @@ export class AddUpdateCardComponent implements OnInit {
 
   async takeImage() {
     const dataUrl = (
-      await this.utilsService.takePicture('Imagen de la miniatura')
+      await this.utilsService.takePicture('Imagen de la carta')
     ).dataUrl;
     if (dataUrl) {
       this.form.controls.photo.setValue(dataUrl);

@@ -1,7 +1,7 @@
 <app-header title="Perfil" [showMenuButton]="true"></app-header>
 <ion-content class="ion-padding-top ion-text-center">
   <ion-avatar>
-    <img *ngIf="user.image" [src]="user.image" />
+    <img *ngIf="user.image" [src]="user.image"  alt=""/>
     <ion-icon *ngIf="!user.image" class="empty-icon" name="person-circle-outline"></ion-icon>
   </ion-avatar>
   <ion-button class="photo-btn" (click)="takeImage()" mode="ios" size="small" shape="round">
@@ -10,7 +10,7 @@
 
   <h2>{{user.name}}</h2>
 
-  <ion-item button detail>
+  <ion-item button detail (click)="updateUser(user)">
     <ion-icon color="primary" slot="start" name="person-outline"></ion-icon>
     <ion-label>Editar perfil</ion-label>
   </ion-item>
