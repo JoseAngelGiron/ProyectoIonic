@@ -1,45 +1,26 @@
-ion-content {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-primary-contrast);
-  --padding-top: 28px;
+ion-tab-bar {
+  background: #000;
+  border-top: 1px solid #000000;
 }
 
-ion-item {
-  font-size: 14px;
-  color: var(--ion-color-light);
-  --background: var(--ion-color-primary);
-
-  ion-icon {
-    color: var(--ion-color-light);
-  }
-
-  &.active {
-    color: var(--ion-color-warning);
-
-    ion-icon {
-      color: var(--ion-color-warning);
-    }
-  }
+ion-tab-button {
+  color: #666;
 }
 
-ion-menu {
-  --width: 254px;
-  --min-width: 254px;
-
-  outline: none;
-}
-
-h4 {
-  margin-top: 5px;
+ion-tab-button[aria-selected="true"] {
+  color: #000;
   font-weight: bold;
 }
 
-.avatar-icon {
-  font-size: 100px;
+ion-router-outlet {
+  position: relative;
+  z-index: 1;
 }
 
-ion-avatar {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto;
+.tab-icon {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
 }
+
+

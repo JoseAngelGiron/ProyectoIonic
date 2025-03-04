@@ -1,6 +1,7 @@
-import {Routes} from '@angular/router';
-import {noAuthGuard} from './guards/no-auth.guard';
-import {authGuard} from './guards/auth.guard';
+import { Routes } from '@angular/router';
+import { noAuthGuard } from './guards/no-auth.guard';
+import { authGuard } from './guards/auth.guard';
+import { MainPage } from './pages/main/main.page';
 
 export const routes: Routes = [
   {
@@ -30,8 +31,7 @@ export const routes: Routes = [
   },
   {
     path: 'main',
-    loadComponent: () =>
-      import('./pages/main/main.page').then((m) => m.MainPage),
+    component: MainPage, // Asegura que MainPage se use aquí
     canActivate: [authGuard],
     children: [
       {
@@ -53,12 +53,18 @@ export const routes: Routes = [
             (m) => m.SensorsPage
           ),
       },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      }
     ],
   },
   {
     path: '**',
     loadComponent: () =>
       import('./pages/not-found/not-found.page').then(
-        (m) => m.NotFoundPage)
+        (m) => m.NotFoundPage
+      ),
   },
 ];

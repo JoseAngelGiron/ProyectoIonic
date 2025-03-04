@@ -1,68 +1,34 @@
 <app-header [title]="card ? 'Actualizar carta' : 'Añadir carta'" [isModal]="true"></app-header>
+
 <ion-content>
-  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
-    <ion-avatar *ngIf="form.value.photo">
-      <img [src]="form.value.photo"/>
-    </ion-avatar>
-    <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.photo"></ion-icon>
-    <br/>
-    <ion-button (click)="takeImage()" size="small" shape="round" mode="ios">
-      Tomar / Seleccionar
-    </ion-button>
+  <div class="pokemon-card">
+    <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
 
-    <app-custom-input autocomplete="name" [control]="form.controls.name" type="text" label="Nombre"></app-custom-input>
-    <div class="validators" *ngIf="form.get('name')?.errors && form.get('name')?.touched">
-      <div *ngIf="form.get('name')?.errors?.['required']">
-        Debe especificar un nombre
+      <div class="card-image">
+        <ion-avatar *ngIf="form.value.photo">
+          <img [src]="form.value.photo"/>
+        </ion-avatar>
+        <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.photo"></ion-icon>
       </div>
-      <div *ngIf="form.get('name')?.errors?.['minlength']">
-        El nombre debe tener al menos 4 caracteres
-      </div>
-    </div>
 
-    <app-custom-input [control]="form.controls.skill" type="text" label="Habilidad"></app-custom-input>
-    <div class="validators" *ngIf="form.get('skill')?.errors && form.get('skill')?.touched">
-      <div *ngIf="form.get('skill')?.errors?.['required']">
-        Debe especificar una habilidad
-      </div>
-      <div *ngIf="form.get('skill')?.errors?.['minlength']">
-        La habilidad debe tener al menos 4 caracteres
-      </div>
-    </div>
+      <ion-button (click)="takeImage()" size="small" shape="round" mode="ios">
+        Tomar / Seleccionar
+      </ion-button>
 
-    <app-custom-input [control]="form.controls.attack" type="text" label="Ataque"></app-custom-input>
-    <div class="validators" *ngIf="form.get('attack')?.errors && form.get('attack')?.touched">
-      <div *ngIf="form.get('attack')?.errors?.['required']">
-        Debe especificar un ataque
-      </div>
-      <div *ngIf="form.get('attack')?.errors?.['minlength']">
-        El ataque debe tener al menos 4 caracteres
-      </div>
-    </div>
 
-    <app-custom-input [control]="form.controls.type" type="text" label="Tipo"></app-custom-input>
-    <div class="validators" *ngIf="form.get('type')?.errors && form.get('type')?.touched">
-      <div *ngIf="form.get('type')?.errors?.['required']">
-        Debe especificar un tipo de pokemon
+      <div class="card-details">
+        <app-custom-input autocomplete="name" [control]="form.controls.name" type="text" label="Nombre"></app-custom-input>
+        <app-custom-input [control]="form.controls.skill" type="text" label="Habilidad"></app-custom-input>
+        <app-custom-input [control]="form.controls.attack" type="text" label="Ataque"></app-custom-input>
+        <app-custom-input [control]="form.controls.type" type="text" label="Tipo"></app-custom-input>
+        <app-custom-input [control]="form.controls.weakness" type="text" label="Debilidad"></app-custom-input>
       </div>
-      <div *ngIf="form.get('type')?.errors?.['minlength']">
-        El tipo debe tener al menos 4 caracteres
-      </div>
-    </div>
 
-    <app-custom-input [control]="form.controls.weakness" type="text" label="Debilidad"></app-custom-input>
-    <div class="validators" *ngIf="form.get('weakness')?.errors && form.get('weakness')?.touched">
-      <div *ngIf="form.get('weakness')?.errors?.['required']">
-        Debe especificar una debilidad
-      </div>
-      <div *ngIf="form.get('weakness')?.errors?.['minlength']">
-        La debilidad debe tener al menos 4 caracteres
-      </div>
-    </div>
 
-    <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
-      {{card ? 'Actualizar' : 'Añadir'}}
-      <ion-icon slot="end" name="body-outline"></ion-icon>
-    </ion-button>
-  </form>
+      <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+        {{card ? 'Actualizar' : 'Añadir'}}
+        <ion-icon slot="end" name="body-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </div>
 </ion-content>

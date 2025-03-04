@@ -1,32 +1,27 @@
-<ion-menu contentId="menu-content" menuId="menu-content" side="start">
-  <app-header title="Menu"></app-header>
-  <ion-content class="ion-text-center">
-    <ion-avatar>
-      <img *ngIf="user.image" [src]="user.image" />
-      <ion-icon *ngIf="!user.image" class="avatar-icon" name="person-circle-outline"></ion-icon>
-    </ion-avatar>
-    <h4>{{user.name}}</h4>
+<ion-tabs>
+  <ion-router-outlet id="menu-content"></ion-router-outlet>
 
-    <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-      <ion-item
-        [routerLink]="page.url"
-        routerLinkActive="active"
-        routerDirection="root"
-        detail
-      >
-        <ion-icon slot="start" [name]="page.icon"></ion-icon>
-        <ion-label>{{page.title}}</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
-  </ion-content>
-  <ion-footer class="ion-no-border">
-    <ion-menu-toggle auto-hide="false">
-      <ion-item (click)="signOut()" lines="none">
-        <ion-icon slot="start" name="log-out-outline"></ion-icon>
-        <ion-label>Cerrar sesión</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
-  </ion-footer>
-</ion-menu>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" routerLink="/main/home" routerDirection="root">
+      <img src="assets/icon/home.svg" class="tab-icon" />
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
 
-<ion-router-outlet id="menu-content" main></ion-router-outlet>
+    <ion-tab-button tab="profile" routerLink="/main/profile" routerDirection="root">
+      <img src="assets/icon/profile.svg" class="tab-icon" />
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="sensors" routerLink="/main/sensors" routerDirection="root">
+      <img src="assets/icon/sensores.svg" class="tab-icon" />
+      <ion-label>Sensores</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="signOut()">
+      <img src="assets/icon/exit.svg" class="tab-icon" />
+      <ion-label>Salir</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+
