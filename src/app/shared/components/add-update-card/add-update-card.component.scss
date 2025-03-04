@@ -1,11 +1,86 @@
-.image-icon {
-  font-size: 100px;
-  opacity: 30%;
-}
+.pokemon-card {
+  width: 320px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298, #4a90e2, #6dd5fa, #ffffff);
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  margin: 20px auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  border: 5px solid #003a70;
 
-ion-avatar {
-  width: 200px;
-  height: 160px;
-  --border-radius: 15px;
-  margin: 0 auto;
+  .card-image {
+    width: 200px;
+    height: 160px;
+    background-color: white;
+    border-radius: 15px;
+    margin: 10px auto;
+    overflow: hidden;
+    border: 3px solid black;
+
+    ion-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 0px;
+    }
+
+    .image-icon {
+      font-size: 100px;
+      opacity: 30%;
+      color: gray;
+    }
+  }
+
+  .card-details {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+
+    app-custom-input {
+      margin-bottom: 5px;
+    }
+  }
+
+  ion-button {
+    background-color: #003a70;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  .card-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 0px;
+    overflow: hidden;
+    border: 3px solid #3880ff;
+    margin-bottom: 10px;
+  }
+
+  .card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .custom-chip {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 16px;
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-chip.ion-color-primary {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+  }
+
 }
