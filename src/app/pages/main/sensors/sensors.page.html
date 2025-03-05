@@ -1,8 +1,21 @@
 <app-header [showMenuButton]="true" title="Sensores"></app-header>
 
-<ion-content class="ion-padding">
+<ion-segment [(ngModel)]="selectedSegment" >
+  <ion-segment-button value="gps">
+    <ion-label>GPS</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="accelerometer">
+    <ion-label>Acelerómetro</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="battery">
+    <ion-label>Batería</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Contenedor para las tarjetas -->
+<div >
   <!-- GPS -->
-  <ion-card>
+  <ion-card *ngIf="selectedSegment === 'gps'">
     <ion-card-header>
       <ion-card-title>GPS</ion-card-title>
     </ion-card-header>
@@ -14,7 +27,7 @@
   </ion-card>
 
   <!-- Acelerómetro -->
-  <ion-card>
+  <ion-card *ngIf="selectedSegment === 'accelerometer'">
     <ion-card-header>
       <ion-card-title>Acelerómetro</ion-card-title>
     </ion-card-header>
@@ -22,20 +35,18 @@
       <p>X: {{ accelerometerData.x | number:'1.1-1' }}</p>
       <p>Y: {{ accelerometerData.y | number:'1.1-1' }}</p>
       <p>Z: {{ accelerometerData.z | number:'1.1-1' }}</p>
-      <p>Alpha: {{ orientationData.alpha | number:'1.1-1' }}</p>
-      <p>Beta: {{ orientationData.beta | number:'1.1-1' }}</p>
-      <p>Gamma: {{ orientationData.gamma | number:'1.1-1' }}</p>
     </ion-card-content>
   </ion-card>
 
   <!-- Batería -->
-  <ion-card>
+  <ion-card class="battery-card" *ngIf="selectedSegment === 'battery'">
     <ion-card-header>
       <ion-card-title>Batería</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <ion-progress-bar [value]="batteryInfo?.batteryLevel"></ion-progress-bar>
       <p>Estado: {{ batteryInfo?.isCharging ? 'Cargando 🔌' : 'No cargando 🔋' }}</p>
       <p>Porcentaje: {{ (batteryInfo?.batteryLevel || 0) * 100 | number:'1.0-0' }}%</p>
     </ion-card-content>
   </ion-card>
-</ion-content>
+</div>

@@ -38,7 +38,11 @@ export class ProfilePage implements OnInit {
     await loading.present();
 
     const path: string = `users/${this.user.uid}`;
-    const imagePath = `${this.user.uid}/profile`;
+    if (this.user.image) {
+      const oldImagePath = this.supabaseService.getFilePath(this.user.image)
+      await this.supabaseService.deleteFile(oldImagePath!);
+    }
+    let imagePath = `${this.user.uid}/profile${Date.now()}`;
     const imageUrl = await this.supabaseService.uploadImage(
       imagePath,
       dataUrl!

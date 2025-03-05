@@ -6,7 +6,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
+  IonCardContent, IonProgressBar, IonLabel, IonSegmentButton, IonSegment,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { SensorService } from 'src/app/services/sensor.service';
@@ -28,11 +28,15 @@ import { Device, BatteryInfo } from '@capacitor/device'; // Importamos BatteryIn
     CommonModule,
     FormsModule,
     HeaderComponent,
+    IonProgressBar,
+    IonLabel,
+    IonSegmentButton,
+    IonSegment,
   ],
-})
+}) //<app-header [showMenuButton]="true" title="Sensores"></app-header>
 export class SensorsPage implements OnInit, OnDestroy {
   sensorService = inject(SensorService);
-
+  selectedSegment: string = 'gps';
   private accelerometerDataSubscription: Subscription | null = null;
   private orientationDataSubscription: Subscription | null = null;
   private coordinatesSubscription: Subscription | null = null;
