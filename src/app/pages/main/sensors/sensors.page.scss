@@ -13,7 +13,7 @@ ion-segment {
 /* Estilo de los botones de ion-segment */
 ion-segment-button {
   font-weight: bold;
-  color: #aaa; /* Letras gris claro */
+  color: #aaa;
   transition: all 0.3s ease-in-out;
 
   &[aria-checked="true"] {
@@ -22,35 +22,44 @@ ion-segment-button {
   }
 }
 
-/* Estilo de ion-content */
+
 ion-content {
-  padding-top: 140px; /* Ajuste para asegurarse de que las tarjetas estén justo debajo del ion-segment */
-  margin-top: 0; /* No necesitamos más margen superior */
+  --padding-top: 160px;
 }
 
-/* Estilo de las tarjetas (ion-card) */
+
 ion-card {
-  margin: 10px;
+  margin: 10px auto;
   padding: 15px;
-  border-radius: 15px; /* Bordes redondeados para un diseño más moderno */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar efecto elevado */
-  background: #fff; /* Asegura fondo blanco */
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  max-width: 90%;
 }
 
-/* Contenedor para las tarjetas, aseguramos que no se solapen */
+ion-card:first-of-type {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 20px);
+  z-index: 5;
+}
+
+
 div {
-  padding: 0 16px; /* Ajustamos el padding del contenedor */
+  padding: 0 16px;
 }
 
-/* Estilos específicos para la tarjeta de batería */
+
 .battery-card {
-  transition: background 0.3s;
+  transition: background 0.3s ease-in-out;
 
   &.charging {
-    background: #d4edda !important; /* Verde claro cuando está cargando */
+    background: #d4edda !important;
   }
 
   &.low {
-    background: #f8d7da !important; /* Rojo claro si la batería es menor al 20% */
+    background: #f8d7da !important;
   }
 }

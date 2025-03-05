@@ -12,7 +12,7 @@
   </ion-segment-button>
 </ion-segment>
 
-<!-- Contenedor para las tarjetas -->
+
 <div >
   <!-- GPS -->
   <ion-card *ngIf="selectedSegment === 'gps'">
@@ -26,7 +26,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Acelerómetro -->
+
   <ion-card *ngIf="selectedSegment === 'accelerometer'">
     <ion-card-header>
       <ion-card-title>Acelerómetro</ion-card-title>
@@ -38,7 +38,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Batería -->
+
   <ion-card class="battery-card" *ngIf="selectedSegment === 'battery'">
     <ion-card-header>
       <ion-card-title>Batería</ion-card-title>
