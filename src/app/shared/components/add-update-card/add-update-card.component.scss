@@ -83,4 +83,31 @@
     color: #007bff;
   }
 
+  @keyframes bounceIn {
+    0% {
+      transform: translateY(-300px);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(30px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .add-update-modal {
+    opacity: 0;
+    transform: translateY(-300px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  .add-update-modal.bounceIn {
+    animation: bounceIn 0.6s ease-out;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
 }

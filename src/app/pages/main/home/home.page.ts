@@ -75,6 +75,7 @@ export class HomePage implements OnInit, OnDestroy {
       cssClass: 'add-update-modal',
       componentProps: {card}
     });
+
     if (success) {
       this.getCards();
     }
