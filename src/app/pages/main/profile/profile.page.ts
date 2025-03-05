@@ -9,6 +9,7 @@ import { User } from 'src/app/models/user.model';
 import { addIcons } from 'ionicons';
 import { cameraOutline, personOutline } from 'ionicons/icons';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
+import {UpdateProfileComponent} from "../../../components/update-profile/update-profile.component";
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,11 @@ export class ProfilePage implements OnInit {
     await loading.present();
 
     const path: string = `users/${this.user.uid}`;
-    const imagePath = `${this.user.uid}/profile`;
+    if (this.user.image) {
+      const oldImagePath = this.supabaseService.getFilePath(this.user.image)
+      await this.supabaseService.deleteFile(oldImagePath!);
+    }
+    let imagePath = `${this.user.uid}/profile${Date.now()}`;
     const imageUrl = await this.supabaseService.uploadImage(
       imagePath,
       dataUrl!
@@ -68,5 +73,13 @@ export class ProfilePage implements OnInit {
       .finally(() => {
         loading.dismiss();
       });
+  }
+
+  async updateUser(user: User) {
+    await this.utilsService.presentModal({
+      component: UpdateProfileComponent,
+      cssClass: 'app-update-profile',
+      componentProps: {user}
+    });
   }
 }
