@@ -41,7 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
   cards: Card[] = [];
   filteredCards: Card[] = [];
   loading: boolean = false;
-  searchText: string = '';  // Esto almacenará el texto de búsqueda
+  searchText: string = '';
   cardsSubscription?: Subscription;
 
   constructor() {
@@ -64,7 +64,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.cardsSubscription = this.firebaseService.getCollectionData(path).subscribe({
       next: (res: Card[]) => {
         this.cards = res;
-        this.filterCards();  // Filtrar las cartas al obtenerlas
+        this.filterCards();
         this.loading = false;
       },
       error: (err) => {
