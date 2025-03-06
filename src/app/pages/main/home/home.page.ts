@@ -26,7 +26,8 @@ import {
   bodyOutline,
   createOutline,
   informationCircleOutline,
-  trashOutline
+  trashOutline,
+  personCircleOutline, flashOutline, flameOutline, layersOutline, alertCircleOutline, albumsOutline
 } from 'ionicons/icons';
 import {FirebaseService} from 'src/app/services/firebase.service';
 import {UtilsService} from 'src/app/services/utils.service';
@@ -57,7 +58,12 @@ export class HomePage implements OnInit, OnDestroy {
   cardsSubscription?: Subscription;
 
   constructor() {
-    addIcons({add, bodyOutline, createOutline, trashOutline, informationCircleOutline, addCircleOutline});
+    addIcons({add, bodyOutline, createOutline, trashOutline, informationCircleOutline, addCircleOutline, personCircleOutline,
+      flashOutline,
+      flameOutline,
+      layersOutline,
+      alertCircleOutline,
+      albumsOutline});
   }
 
   ngOnInit() {
