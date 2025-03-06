@@ -191,3 +191,57 @@ ion-chip {
   }
 }
 
+
+.info-note {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.info-text {
+  font-size: 16px;
+  color: #fff;
+}
+
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 30px;
+  background-color: #444;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.empty-icon {
+  font-size: 50px;
+  color: #ffcc00;
+  margin-bottom: 15px;
+}
+
+.empty-text {
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.custom-badge {
+  font-size: 18px;
+  padding: 6px 10px;
+}
+
+
+
+

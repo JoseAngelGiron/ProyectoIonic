@@ -1,7 +1,7 @@
 <app-header title="Actualizar usuario" [isModal]="true"></app-header>
 <ion-content>
   <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
-    <ion-avatar>
+    <ion-avatar class="center-avatar">
       <img [src]="form.value.image" alt=""/>
     </ion-avatar>
     <ion-icon class="image-icon" name="image-outline"></ion-icon>
@@ -33,8 +33,10 @@
     </div>
 
     <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+      <ion-icon class="image-icon" name="refresh-outline"></ion-icon>
       Actualizar
-      <ion-icon slot="end" name="body-outline"></ion-icon>
+      <ion-icon class="image-icon" name="refresh-outline"></ion-icon>
+
     </ion-button>
   </form>
 </ion-content>

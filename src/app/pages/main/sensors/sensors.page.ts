@@ -6,7 +6,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent, IonProgressBar, IonLabel, IonSegmentButton, IonSegment,
+  IonCardContent, IonProgressBar, IonLabel, IonSegmentButton, IonSegment, IonIcon,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { SensorService } from 'src/app/services/sensor.service';
@@ -32,6 +32,7 @@ import { Device, BatteryInfo } from '@capacitor/device'; // Importamos BatteryIn
     IonLabel,
     IonSegmentButton,
     IonSegment,
+    IonIcon,
   ],
 }) //<app-header [showMenuButton]="true" title="Sensores"></app-header>
 export class SensorsPage implements OnInit, OnDestroy {
