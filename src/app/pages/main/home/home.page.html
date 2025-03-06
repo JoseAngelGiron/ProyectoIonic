@@ -18,7 +18,8 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-           Número de cartas en tu posesión actualmente:
+          <ion-icon name="albums-outline" class="icon"></ion-icon>
+          Número de cartas en tu posesión actualmente:
           <ion-badge class="custom-badge badge-count">{{ cards.length }}</ion-badge>
         </ion-title>
       </ion-toolbar>
@@ -30,13 +31,31 @@
           <div class="card-avatar">
             <img [src]="card.photo" alt="avatar" />
           </div>
-          <div class="card-name custom-card-name">{{ card.name }}</div>
-          <div class="card-skill custom-card-skill">Habilidad: {{ card.skill }}</div>
-          <div class="card-attack custom-card-attack">Ataque: {{ card.attack }}</div>
+
+          <div class="card-name custom-card-name">
+            <ion-icon name="person-circle-outline" class="icon"></ion-icon>
+            {{ card.name }}
+          </div>
+
+          <div class="card-skill custom-card-skill">
+            <ion-icon name="flash-outline" class="icon"></ion-icon>
+            Habilidad: {{ card.skill }}
+          </div>
+
+          <div class="card-attack custom-card-attack">
+            <ion-icon name="flame-outline" class="icon"></ion-icon>
+            Ataque: {{ card.attack }}
+          </div>
+
           <ion-chip color="primary" mode="ios" outline="true">
+            <ion-icon name="layers-outline" class="icon"></ion-icon>
             Tipo: {{ card.type }}
           </ion-chip>
-          <div class="card-weakness custom-card-weakness">Debilidad: {{ card.weakness }}</div>
+
+          <div class="card-weakness custom-card-weakness">
+            <ion-icon name="alert-circle-outline" class="icon"></ion-icon>
+            Debilidad: {{ card.weakness }}
+          </div>
         </ion-label>
       </ion-item>
 
