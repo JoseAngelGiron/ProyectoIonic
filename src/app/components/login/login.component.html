@@ -14,7 +14,7 @@
         <app-custom-input [control]="loginForm.controls.password" icon="lock-closed" type="password"
                           label="Contraseña"></app-custom-input>
         <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
-          <small *ngIf="loginForm.get('password')?.hasError('required')">El asunto es obligatorio.</small>
+          <small *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es obligatoria.</small>
         </div>
       </div>
 

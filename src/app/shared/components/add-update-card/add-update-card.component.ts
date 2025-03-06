@@ -4,14 +4,19 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} f
 
 import {addIcons} from 'ionicons';
 import {
+  accessibilityOutline,
   alertCircleOutline,
+  bodyOutline,
+  bulbOutline,
   checkmarkOutline,
+  flashOutline,
   imageOutline,
   lockClosedOutline,
   mailOutline,
   personAddOutline,
   personOutline,
-  bodyOutline
+  pricetagOutline,
+  shieldHalfOutline
 } from 'ionicons/icons';
 
 import {FirebaseService} from 'src/app/services/firebase.service';
@@ -19,7 +24,7 @@ import {User} from 'src/app/models/user.model';
 import {UtilsService} from 'src/app/services/utils.service';
 import {CustomInputComponent} from "../custom-input/custom-input.component";
 import {HeaderComponent} from "../header/header.component";
-import {IonAvatar, IonButton, IonContent, IonIcon} from "@ionic/angular/standalone";
+import {IonButton, IonContent, IonIcon} from "@ionic/angular/standalone";
 import {SupabaseService} from "../../../services/supabase.service";
 import {Card} from "../../../models/card.model";
 
@@ -36,7 +41,7 @@ import {Card} from "../../../models/card.model";
     IonContent,
     IonButton,
     IonIcon,
-    IonAvatar,
+
   ],
 })
 
@@ -60,6 +65,7 @@ export class AddUpdateCardComponent implements OnInit {
 
   constructor() {
     addIcons({
+      accessibilityOutline,
       mailOutline,
       lockClosedOutline,
       personAddOutline,
@@ -67,7 +73,11 @@ export class AddUpdateCardComponent implements OnInit {
       alertCircleOutline,
       imageOutline,
       checkmarkOutline,
-      bodyOutline
+      bodyOutline,
+      bulbOutline,
+      flashOutline,
+      pricetagOutline,
+      shieldHalfOutline,
     });
   }
 
@@ -146,7 +156,10 @@ export class AddUpdateCardComponent implements OnInit {
     const path: string = `users/${this.user.uid}/cards/${this.card!.id}`;
     if (this.form.value.photo != this.card!.photo) {
       const imageDataUrl = this.form.value.photo;
-      const imagePath = this.supabaseService.getFilePath(this.card!.photo)
+
+      const oldImagePath = await this.supabaseService.getFilePath(this.card!.photo);
+      await this.supabaseService.deleteFile(oldImagePath!);
+      const imagePath = `${this.user.uid}/${Date.now()}`;
       const imageUrl = await this.supabaseService.uploadImage(
         imagePath!,
         imageDataUrl!

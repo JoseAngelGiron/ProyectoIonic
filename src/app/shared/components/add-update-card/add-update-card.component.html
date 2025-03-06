@@ -3,28 +3,50 @@
 <ion-content>
   <div class="pokemon-card">
     <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
-
       <div class="card-image">
-        <img *ngIf="form.value.photo" [src]="form.value.photo" class="pokemon-photo"/>
+        <img *ngIf="form.value.photo" [src]="form.value.photo" class="pokemon-photo" alt=""/>
         <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.photo"></ion-icon>
       </div>
-
       <ion-button (click)="takeImage()" size="small" shape="round" mode="ios">
         Tomar / Seleccionar
       </ion-button>
 
-
       <div class="card-details">
-        <app-custom-input autocomplete="name" [control]="form.controls.name" type="text" label="Nombre"></app-custom-input>
-        <app-custom-input [control]="form.controls.skill" type="text" label="Habilidad"></app-custom-input>
-        <app-custom-input [control]="form.controls.attack" type="text" label="Ataque"></app-custom-input>
-        <app-custom-input [control]="form.controls.type" type="text" label="Tipo"></app-custom-input>
-        <app-custom-input [control]="form.controls.weakness" type="text" label="Debilidad"></app-custom-input>
+        <app-custom-input autocomplete="name" [control]="form.controls.name" type="text" icon="accessibility-outline"
+                          label="Nombre"></app-custom-input>
+        <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">
+          <small *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio.</small>
+          <small *ngIf="form.get('name')?.hasError('minlength')">El nombre debe tener al menos 4
+            caracteres</small>
+        </div>
+        <app-custom-input [control]="form.controls.skill" type="text" icon="bulb-outline" label="Habilidad"></app-custom-input>
+        <div *ngIf="form.get('skill')?.invalid && form.get('skill')?.touched" class="text-danger">
+          <small *ngIf="form.get('skill')?.hasError('required')">La habilidad es obligatoria.</small>
+          <small *ngIf="form.get('skill')?.hasError('minlength')">La habilidad debe tener al menos 4
+            caracteres</small>
+        </div>
+        <app-custom-input [control]="form.controls.attack" type="text" icon="flash-outline" label="Ataque"></app-custom-input>
+        <div *ngIf="form.get('attack')?.invalid && form.get('attack')?.touched" class="text-danger">
+          <small *ngIf="form.get('attack')?.hasError('required')">El ataque es obligatorio.</small>
+          <small *ngIf="form.get('attack')?.hasError('minlength')">El ataque debe tener al menos 4
+            caracteres</small>
+        </div>
+        <app-custom-input [control]="form.controls.type" type="text" icon="pricetag-outline" label="Tipo"></app-custom-input>
+        <div *ngIf="form.get('type')?.invalid && form.get('type')?.touched" class="text-danger">
+          <small *ngIf="form.get('type')?.hasError('required')">El tipo es obligatorio.</small>
+          <small *ngIf="form.get('type')?.hasError('minlength')">El tipo debe tener al menos 4
+            caracteres</small>
+        </div>
+        <app-custom-input [control]="form.controls.weakness" type="text" icon="shield-half-outline" label="Debilidad"></app-custom-input>
+        <div *ngIf="form.get('weakness')?.invalid && form.get('weakness')?.touched" class="text-danger">
+          <small *ngIf="form.get('weakness')?.hasError('required')">La debilidad es obligatoria.</small>
+          <small *ngIf="form.get('weakness')?.hasError('minlength')">La debilidad debe tener al menos 4
+            caracteres</small>
+        </div>
       </div>
 
-
       <ion-button mode="ios" class="ion-margin left-button" type="submit" [disabled]="form.invalid">
-        {{card ? 'Actualizar' : 'Añadir'}}
+        {{ card ? 'Actualizar' : 'Añadir' }}
         <ion-icon name="body-outline"></ion-icon>
       </ion-button>
     </form>

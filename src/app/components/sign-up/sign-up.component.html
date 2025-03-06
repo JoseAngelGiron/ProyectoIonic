@@ -24,6 +24,8 @@
                           label="Contraseña"></app-custom-input>
         <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched" class="text-danger">
           <small *ngIf="signUpForm.get('password')?.hasError('required')">El asunto es obligatorio.</small>
+          <small *ngIf="signUpForm.get('password')?.hasError('minlength')">La contraseña debe tener al menos 8
+            caracteres</small>
         </div>
       </div>
 

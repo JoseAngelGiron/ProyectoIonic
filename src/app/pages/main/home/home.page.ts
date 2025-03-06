@@ -1,30 +1,42 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {
-  IonAvatar, IonBadge, IonButtons,
+  IonAvatar,
+  IonBadge,
   IonChip,
   IonContent,
   IonFab,
-  IonFabButton, IonHeader,
+  IonFabButton,
+  IonHeader,
   IonIcon,
   IonItem,
   IonItemOption,
   IonItemOptions,
   IonItemSliding,
   IonLabel,
-  IonList, IonSearchbar,
-  IonSkeletonText, IonTitle, IonToolbar
+  IonList,
+  IonSearchbar,
+  IonSkeletonText,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { add, bodyOutline, createOutline, trashOutline } from 'ionicons/icons';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
-import { AddUpdateCardComponent } from 'src/app/shared/components/add-update-card/add-update-card.component';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { User } from "../../../models/user.model";
-import { Card } from "../../../models/card.model";
-import { NgForOf, NgIf } from "@angular/common";
-import { SupabaseService } from "../../../services/supabase.service";
-import { Subscription } from "rxjs";
+import {addIcons} from 'ionicons';
+import {
+  add,
+  addCircleOutline,
+  bodyOutline,
+  createOutline,
+  informationCircleOutline,
+  trashOutline
+} from 'ionicons/icons';
+import {FirebaseService} from 'src/app/services/firebase.service';
+import {UtilsService} from 'src/app/services/utils.service';
+import {AddUpdateCardComponent} from 'src/app/shared/components/add-update-card/add-update-card.component';
+import {HeaderComponent} from 'src/app/shared/components/header/header.component';
+import {User} from "../../../models/user.model";
+import {Card} from "../../../models/card.model";
+import {NgForOf, NgIf} from "@angular/common";
+import {SupabaseService} from "../../../services/supabase.service";
+import {Subscription} from "rxjs";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -32,7 +44,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText, IonSearchbar, FormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonBadge],
+  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText, IonSearchbar, FormsModule, IonHeader, IonToolbar, IonTitle, IonBadge],
 })
 export class HomePage implements OnInit, OnDestroy {
   firebaseService = inject(FirebaseService);
@@ -41,18 +53,17 @@ export class HomePage implements OnInit, OnDestroy {
   cards: Card[] = [];
   filteredCards: Card[] = [];
   loading: boolean = false;
-  searchText: string = '';  // Esto almacenará el texto de búsqueda
+  searchText: string = '';
   cardsSubscription?: Subscription;
 
   constructor() {
-    addIcons({ add, bodyOutline, createOutline, trashOutline });
+    addIcons({add, bodyOutline, createOutline, trashOutline, informationCircleOutline, addCircleOutline});
   }
 
   ngOnInit() {
     console.log("Método de home page iniciado");
   }
 
-  // Obtener las cartas de Firebase
   getCards() {
     this.loading = true;
     const user: User = this.utilsService.getLocalStoredUser()!;
@@ -89,7 +100,7 @@ export class HomePage implements OnInit, OnDestroy {
     let success = await this.utilsService.presentModal({
       component: AddUpdateCardComponent,
       cssClass: 'add-update-modal',
-      componentProps: { card }
+      componentProps: {card}
     });
 
     if (success) {
@@ -140,7 +151,6 @@ export class HomePage implements OnInit, OnDestroy {
         loading.dismiss();
       });
   }
-
 
   async confirmDeleteCard(card: Card) {
     this.utilsService.presentAlert({
