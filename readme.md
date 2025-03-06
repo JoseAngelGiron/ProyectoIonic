@@ -1,6 +1,6 @@
 # Pokemon TCG - IES Francisco de los ríos
 
-Pokemon TCG es una aplicación desarrollada con [Angular](https://angular.io/) e [Ionic](https://ionicframework.com/) que permite gestionar una colección de miniaturas del universo WarMace.
+Pokemon TCG es una aplicación desarrollada con [Angular](https://angular.io/) e [Ionic](https://ionicframework.com/) que permite gestionar tu colección de cartas Pokémon, aunque puedes crear cartas de cualquier otro tipo.
 
 ## Requisitos previos
 
