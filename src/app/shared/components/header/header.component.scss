@@ -1,11 +1,11 @@
 ion-header {
-  background: linear-gradient(45deg, #ffcc00, #ff0000); // Colores de Pokémon
-  border-bottom: 4px solid #003a70; // Azul oscuro de Pokémon
+  background: linear-gradient(45deg, #ffcc00, #ff0000);
+  border-bottom: 4px solid #003a70;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 
   ion-toolbar {
     color: white;
-    font-family: "Press Start 2P", cursive; // Fuente estilo TCG
+    font-family: "Press Start 2P", cursive;
     text-align: center;
 
     ion-title {
@@ -22,7 +22,7 @@ ion-header {
 
       .wmm {
         font-size: 14px;
-        color: #ffcc00; // Amarillo característico de Pokémon
+        color: #ffcc00;
         text-shadow: 1px 1px 2px black;
         font-weight: bold;
       }

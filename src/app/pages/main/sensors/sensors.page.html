@@ -14,39 +14,44 @@
 
 
 <div >
-  <!-- GPS -->
   <ion-card *ngIf="selectedSegment === 'gps'">
     <ion-card-header>
-      <ion-card-title>GPS</ion-card-title>
+      <ion-card-title>
+        <ion-icon name="location-outline"></ion-icon> GPS
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Latitud: {{ position?.coords?.latitude }}</p>
-      <p>Longitud: {{ position?.coords?.longitude }}</p>
-      <p>Precisión: {{ position?.coords?.accuracy }} metros</p>
+      <p>📍 Latitud: {{ position?.coords?.latitude }}</p>
+      <p>📍 Longitud: {{ position?.coords?.longitude }}</p>
+      <p>🎯 Precisión: {{ position?.coords?.accuracy }} metros</p>
     </ion-card-content>
   </ion-card>
-
 
   <ion-card *ngIf="selectedSegment === 'accelerometer'">
     <ion-card-header>
-      <ion-card-title>Acelerómetro</ion-card-title>
+      <ion-card-title>
+        <ion-icon name="speedometer-outline"></ion-icon> Acelerómetro
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>X: {{ accelerometerData.x | number:'1.1-1' }}</p>
-      <p>Y: {{ accelerometerData.y | number:'1.1-1' }}</p>
-      <p>Z: {{ accelerometerData.z | number:'1.1-1' }}</p>
+      <p>🔄 X: {{ accelerometerData.x | number:'1.1-1' }}</p>
+      <p>🔄 Y: {{ accelerometerData.y | number:'1.1-1' }}</p>
+      <p>🔄 Z: {{ accelerometerData.z | number:'1.1-1' }}</p>
     </ion-card-content>
   </ion-card>
-
 
   <ion-card class="battery-card" *ngIf="selectedSegment === 'battery'">
     <ion-card-header>
-      <ion-card-title>Batería</ion-card-title>
+      <ion-card-title>
+        <ion-icon [name]="batteryInfo?.isCharging ? 'battery-charging-outline' : 'battery-dead-outline'"></ion-icon>
+        Batería
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-progress-bar [value]="batteryInfo?.batteryLevel"></ion-progress-bar>
-      <p>Estado: {{ batteryInfo?.isCharging ? 'Cargando 🔌' : 'No cargando 🔋' }}</p>
-      <p>Porcentaje: {{ (batteryInfo?.batteryLevel || 0) * 100 | number:'1.0-0' }}%</p>
+      <ion-progress-bar [value]="batteryInfo?.batteryLevel" class="battery-bar"></ion-progress-bar>
+      <p>🔌 Estado: {{ batteryInfo?.isCharging ? 'Cargando' : 'No cargando' }}</p>
+      <p>⚡ Porcentaje: {{ (batteryInfo?.batteryLevel || 0) * 100 | number:'1.0-0' }}%</p>
     </ion-card-content>
   </ion-card>
+
 </div>

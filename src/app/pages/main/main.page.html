@@ -3,25 +3,26 @@
 
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home" routerLink="/main/home" routerDirection="root">
-      <img src="assets/icon/home.svg" class="tab-icon" />
+      <ion-icon name="home-outline"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="profile" routerLink="/main/profile" routerDirection="root">
-      <img src="assets/icon/profile.svg" class="tab-icon" />
+      <ion-icon name="person-outline"></ion-icon>
       <ion-label>Perfil</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="sensors" routerLink="/main/sensors" routerDirection="root">
-      <img src="assets/icon/sensores.svg" class="tab-icon" />
+      <ion-icon name="hardware-chip-outline"></ion-icon>
       <ion-label>Sensores</ion-label>
     </ion-tab-button>
 
     <ion-tab-button (click)="signOut()">
-      <img src="assets/icon/exit.svg" class="tab-icon" />
+      <ion-icon name="log-out-outline"></ion-icon>
       <ion-label>Salir</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+
 
 

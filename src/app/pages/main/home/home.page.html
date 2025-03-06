@@ -1,8 +1,34 @@
 <app-header [showMenuButton]="true" title="Inicio"></app-header>
 
 <ion-content>
+
+
+  <div *ngIf="!loading && cards.length > 0" class="info-note">
+    <ion-icon name="warning-outline" class="info-icon"></ion-icon>
+    <span class="info-text">¡Bienvenido! ¡Aquí están todas tus cartas! Para editar o eliminar, arrastra la carta en cuestión hacía
+    la izquierda</span>
+  </div>
+
+
+  <ion-searchbar
+    [(ngModel)]="searchText"
+    debounce="500"
+    placeholder="Introduzca el nombre de la carta para buscar..."
+    (ionInput)="filterCards()">
+  </ion-searchbar>
+
   <ion-list *ngIf="!loading" class="card-list">
-    <ion-item-sliding *ngFor="let card of cards" class="miniature-item">
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+           Número de cartas en tu posesión actualmente:
+          <ion-badge class="custom-badge badge-count">{{ cards.length }}</ion-badge>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-item-sliding *ngFor="let card of filteredCards" class="miniature-item">
       <ion-item class="card-container">
         <ion-label class="card-content">
           <div class="card-avatar">
@@ -29,31 +55,25 @@
     </ion-item-sliding>
   </ion-list>
 
-
-  <ion-content>
-    <div *ngIf="loading" class="skeleton-container">
-      <div class="skeleton-wrapper">
-        <div *ngFor="let i of cards" class="skeleton-card">
-          <ion-avatar>
-            <ion-skeleton-text animated style="width: 60px; height: 60px;"></ion-skeleton-text>
-          </ion-avatar>
-          <div class="skeleton-content">
-            <ion-skeleton-text animated style="width: 120px; height: 16px;"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 80px; height: 14px;"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 100px; height: 14px;"></ion-skeleton-text>
-          </div>
+  <div *ngIf="loading" class="skeleton-container">
+    <div class="skeleton-wrapper">
+      <div *ngFor="let i of cards" class="skeleton-card">
+        <ion-avatar>
+          <ion-skeleton-text animated style="width: 60px; height: 60px;"></ion-skeleton-text>
+        </ion-avatar>
+        <div class="skeleton-content">
+          <ion-skeleton-text animated style="width: 120px; height: 16px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80px; height: 14px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 100px; height: 14px;"></ion-skeleton-text>
         </div>
       </div>
     </div>
-  </ion-content>
-
-
-
-  <div *ngIf="!loading && cards.length === 0" class="empty">
-    <ion-icon name="body-outline"></ion-icon>
-    <h3>Aún no has agregado ninguna carta</h3>
   </div>
 
+  <div *ngIf="!loading && cards.length === 0" class="empty">
+    <ion-icon name="add-circle-outline" class="empty-icon"></ion-icon>
+    <h3 class="empty-text">¡Aún no has agregado ninguna carta!</h3>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addUpdateCard()">

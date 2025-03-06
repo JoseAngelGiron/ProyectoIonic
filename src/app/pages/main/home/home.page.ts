@@ -1,54 +1,58 @@
-import {Component, inject, OnInit, OnDestroy} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import {
-  IonAvatar,
+  IonAvatar, IonBadge, IonButtons,
   IonChip,
   IonContent,
   IonFab,
-  IonFabButton,
+  IonFabButton, IonHeader,
   IonIcon,
   IonItem,
   IonItemOption,
   IonItemOptions,
   IonItemSliding,
   IonLabel,
-  IonList,
-  IonSkeletonText
+  IonList, IonSearchbar,
+  IonSkeletonText, IonTitle, IonToolbar
 } from '@ionic/angular/standalone';
-import {addIcons} from 'ionicons';
-import {add, bodyOutline, createOutline, trashOutline} from 'ionicons/icons';
-import {FirebaseService} from 'src/app/services/firebase.service';
-import {UtilsService} from 'src/app/services/utils.service';
-import {AddUpdateCardComponent} from 'src/app/shared/components/add-update-card/add-update-card.component';
-import {HeaderComponent} from 'src/app/shared/components/header/header.component';
-import {User} from "../../../models/user.model";
-import {Card} from "../../../models/card.model";
-import {NgForOf, NgIf} from "@angular/common";
-import {SupabaseService} from "../../../services/supabase.service";
-import {Subscription} from "rxjs";
+import { addIcons } from 'ionicons';
+import { add, bodyOutline, createOutline, trashOutline } from 'ionicons/icons';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { AddUpdateCardComponent } from 'src/app/shared/components/add-update-card/add-update-card.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { User } from "../../../models/user.model";
+import { Card } from "../../../models/card.model";
+import { NgForOf, NgIf } from "@angular/common";
+import { SupabaseService } from "../../../services/supabase.service";
+import { Subscription } from "rxjs";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText],
+  imports: [IonFabButton, IonIcon, IonFab, HeaderComponent, IonContent, IonList, IonItem, IonLabel, IonItemSliding, IonAvatar, IonChip, IonItemOptions, IonItemOption, NgForOf, NgIf, IonSkeletonText, IonSearchbar, FormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonBadge],
 })
 export class HomePage implements OnInit, OnDestroy {
   firebaseService = inject(FirebaseService);
   supabaseService = inject(SupabaseService);
   utilsService = inject(UtilsService);
   cards: Card[] = [];
+  filteredCards: Card[] = [];
   loading: boolean = false;
+  searchText: string = '';  // Esto almacenará el texto de búsqueda
   cardsSubscription?: Subscription;
 
   constructor() {
-    addIcons({add, bodyOutline, createOutline, trashOutline});
+    addIcons({ add, bodyOutline, createOutline, trashOutline });
   }
 
   ngOnInit() {
-    console.log("Metodo de home page iniciado");
+    console.log("Método de home page iniciado");
   }
 
+  // Obtener las cartas de Firebase
   getCards() {
     this.loading = true;
     const user: User = this.utilsService.getLocalStoredUser()!;
@@ -60,6 +64,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.cardsSubscription = this.firebaseService.getCollectionData(path).subscribe({
       next: (res: Card[]) => {
         this.cards = res;
+        this.filterCards();  // Filtrar las cartas al obtenerlas
         this.loading = false;
       },
       error: (err) => {
@@ -69,11 +74,22 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
+  filterCards() {
+    if (!this.searchText.trim()) {
+      this.filteredCards = [...this.cards];
+    } else {
+      this.filteredCards = this.cards.filter(card =>
+        card.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+  }
+
+
   async addUpdateCard(card?: Card) {
     let success = await this.utilsService.presentModal({
       component: AddUpdateCardComponent,
       cssClass: 'add-update-modal',
-      componentProps: {card}
+      componentProps: { card }
     });
 
     if (success) {
@@ -124,6 +140,7 @@ export class HomePage implements OnInit, OnDestroy {
         loading.dismiss();
       });
   }
+
 
   async confirmDeleteCard(card: Card) {
     this.utilsService.presentAlert({

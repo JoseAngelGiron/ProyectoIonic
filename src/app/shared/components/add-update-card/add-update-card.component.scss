@@ -9,20 +9,25 @@
   position: relative;
   border: 5px solid #003a70;
 
+  .pokemon-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+
   .card-image {
     width: 200px;
-    height: 160px;
-    background-color: white;
+    background-color: black;
     border-radius: 15px;
     margin: 10px auto;
     overflow: hidden;
     border: 3px solid black;
 
-    ion-avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 0px;
-    }
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .image-icon {
       font-size: 100px;
@@ -31,8 +36,9 @@
     }
   }
 
+
   .card-details {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.9);
     padding: 10px;
     border-radius: 10px;
     margin-top: 10px;
@@ -83,18 +89,8 @@
     color: #007bff;
   }
 
-  @keyframes bounceIn {
-    0% {
-      transform: translateY(-300px);
-      opacity: 0;
-    }
-    60% {
-      transform: translateY(30px);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(0);
-    }
+  .left-button {
+    margin-left: -2px;
   }
 
   .add-update-modal {

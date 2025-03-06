@@ -5,9 +5,7 @@
     <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
 
       <div class="card-image">
-        <ion-avatar *ngIf="form.value.photo">
-          <img [src]="form.value.photo"/>
-        </ion-avatar>
+        <img *ngIf="form.value.photo" [src]="form.value.photo" class="pokemon-photo"/>
         <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.photo"></ion-icon>
       </div>
 
@@ -25,9 +23,9 @@
       </div>
 
 
-      <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+      <ion-button mode="ios" class="ion-margin left-button" type="submit" [disabled]="form.invalid">
         {{card ? 'Actualizar' : 'Añadir'}}
-        <ion-icon slot="end" name="body-outline"></ion-icon>
+        <ion-icon name="body-outline"></ion-icon>
       </ion-button>
     </form>
   </div>
