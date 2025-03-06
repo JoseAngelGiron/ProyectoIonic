@@ -1,14 +1,11 @@
 <app-header [showMenuButton]="true" title="Inicio"></app-header>
 
 <ion-content>
-
-
   <div *ngIf="!loading && cards.length > 0" class="info-note">
-    <ion-icon name="warning-outline" class="info-icon"></ion-icon>
+    <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
     <span class="info-text">¡Bienvenido! ¡Aquí están todas tus cartas! Para editar o eliminar, arrastra la carta en cuestión hacía
     la izquierda</span>
   </div>
-
 
   <ion-searchbar
     [(ngModel)]="searchText"
@@ -18,7 +15,6 @@
   </ion-searchbar>
 
   <ion-list *ngIf="!loading" class="card-list">
-
     <ion-header>
       <ion-toolbar>
         <ion-title>
